@@ -1,22 +1,20 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PostViewSet, CommentViewSet, CreatePost
+from .views import Post_List,Post_Create,Comment_List,Comment_Create,User_List,User_Create,Group_List,Group_Create,list_users,UserRegistrationAPIView
+from . import views
+from django.contrib.auth.views import LoginView
 
-
-# urlpatterns = [
-#     # path('', views.post_list, name='post_list'),
-#     path('', views.index, name='index'),
-#     # path('<int:pk>/', views.post_detail, name='post_detail'),
-#     path('<int:pk>/', views.post_detail, name='post_detail'),
-# ]
-
-
-# router = DefaultRouter()
-# router.register(r'posts', PostViewSet)
-# router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
-    path('create_post', CreatePost.as_view()),
-    path('create_comment', CommentViewSet.as_view()),
-    path('post_list', PostViewSet.as_view()),
+    path('create_post', Post_Create.as_view()),
+    path('list_post', Post_List.as_view()),
+    path('create_comment', Comment_Create.as_view()),
+    path('list_comment', Comment_List.as_view()),
+    path('create_user', User_Create.as_view()),
+    path('list_user2', list_users),
+    path('create_group', Group_Create.as_view()),
+    path('list_group', Group_List.as_view()),
+    path('login', views.login_view, name='login'),
+    path('register', UserRegistrationAPIView.as_view(), name='register'),
+    path('list_post/<int:thread_id>/', views.thread_detail, name='thread_detail')
 ]

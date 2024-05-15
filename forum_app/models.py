@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import User,Group
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -22,5 +23,13 @@ class Category(models.Model):
     description = models.TextField(blank=True)
     parent_category = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
-    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    def __str__(self):
+        return self.user.username
+
+class GroupMembership(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)    
     
